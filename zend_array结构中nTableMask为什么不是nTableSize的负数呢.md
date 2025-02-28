@@ -5,7 +5,31 @@
 ![image-20250228112157786](./images/image-20250228112157786.png)
 
 
+```
+typedef struct _zend_array HashTable;
 
+struct _zend_array {
+	zend_refcounted_h gc;
+	union {
+		struct {
+			ZEND_ENDIAN_LOHI_4(
+				zend_uchar    flags,
+				zend_uchar    _unused,
+				zend_uchar    nIteratorsCount,
+				zend_uchar    _unused2)
+		} v;
+		uint32_t flags;
+	} u;
+	uint32_t          nTableMask;
+	Bucket           *arData;
+	uint32_t          nNumUsed;
+	uint32_t          nNumOfElements;
+	uint32_t          nTableSize;
+	uint32_t          nInternalPointer;
+	zend_long         nNextFreeElement;
+	dtor_func_t       pDestructor;
+};
+```
 
 
 ## 实际的效果-基于php7.3.10
